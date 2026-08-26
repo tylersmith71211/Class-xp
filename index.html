@@ -146,19 +146,19 @@
         </div>
 
         <!-- Level Config Button (Teacher Only) -->
-        <button id="btn-open-settings" class="teacher-only hidden px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold items-center space-x-2 transition border border-slate-700">
+        <button id="btn-open-settings" class="teacher-only hidden px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold flex items-center space-x-2 transition border border-slate-700">
           <i class="fa-solid fa-sliders text-emerald-400"></i>
           <span class="hidden sm:inline">Settings</span>
         </button>
 
         <!-- Export & Backup Data Button (Teacher Only) -->
-        <button id="btn-open-export" class="teacher-only hidden px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold items-center space-x-2 transition border border-slate-700">
+        <button id="btn-open-export" class="teacher-only hidden px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold flex items-center space-x-2 transition border border-slate-700">
           <i class="fa-solid fa-file-csv text-emerald-400"></i>
           <span class="hidden sm:inline">Export</span>
         </button>
 
         <!-- New Class Button (Teacher Only) -->
-        <button id="btn-add-class" class="teacher-only hidden px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold items-center space-x-2 transition shadow-md shadow-emerald-900/30">
+        <button id="btn-add-class" class="teacher-only hidden px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold flex items-center space-x-2 transition shadow-md shadow-emerald-900/30">
           <i class="fa-solid fa-plus"></i>
           <span class="hidden sm:inline">Add Class</span>
         </button>
@@ -207,7 +207,7 @@
           </div>
           <div>
             <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Storage Sync</div>
-            <div id="stat-mode-label" class="text-sm font-bold text-emerald-400">Cloud Connected</div>
+            <div id="stat-mode-label" class="text-sm font-bold text-emerald-400">Ready</div>
           </div>
         </div>
         <button id="btn-batch-award" class="teacher-only hidden px-3 py-2 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl border border-slate-700 transition">
@@ -223,15 +223,25 @@
           <h2 class="text-2xl font-bold font-heading text-white">Class Dashboard</h2>
           <p class="text-xs text-slate-400">Live cloud synchronized experience leaderboard</p>
         </div>
-        <!-- Quick Filter / Sort -->
-        <div class="flex items-center space-x-2">
-          <label for="sort-classes" class="text-xs font-medium text-slate-400">Sort by:</label>
-          <select id="sort-classes" class="bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="name">Class Name</option>
-            <option value="xp-desc">Highest XP</option>
-            <option value="level-desc">Highest Level</option>
-            <option value="progress-desc">Closest to Level Up</option>
-          </select>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <!-- Search input -->
+          <div class="relative">
+            <input type="text" id="search-classes" placeholder="Search class name..." 
+                   class="w-full sm:w-48 bg-slate-900 border border-slate-800 text-xs font-medium text-slate-200 rounded-xl pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-slate-500">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+          </div>
+
+          <!-- Quick Filter / Sort -->
+          <div class="flex items-center space-x-2">
+            <label for="sort-classes" class="text-xs font-medium text-slate-400 whitespace-nowrap">Sort by:</label>
+            <select id="sort-classes" class="bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="name">Class Name</option>
+              <option value="xp-desc">Highest XP</option>
+              <option value="level-desc">Highest Level</option>
+              <option value="progress-desc">Closest to Level Up</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -245,7 +255,7 @@
         <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-3xl text-slate-600 mb-4">
           <i class="fa-solid fa-shield-cat"></i>
         </div>
-        <h3 class="text-xl font-bold font-heading text-slate-300">No Classes Added Yet</h3>
+        <h3 class="text-xl font-bold font-heading text-slate-300">No Classes Found</h3>
         <p class="text-sm text-slate-500 max-w-sm mx-auto mt-1 mb-6">Start gamifying your classroom by creating your first class team!</p>
         <button id="btn-empty-add" class="teacher-only hidden px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition inline-flex items-center space-x-2 shadow-lg shadow-emerald-900/40">
           <i class="fa-solid fa-plus"></i>
@@ -545,98 +555,48 @@
           </div>
         </div>
 
-        <!-- Level XP Requirements Table -->
+        <!-- Level XP Requirement Curve Settings -->
         <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
           <h4 class="text-sm font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-layer-group text-purple-400"></i>
-            <span>Level Thresholds (Levels 1 - 20)</span>
+            <i class="fa-solid fa-chart-line text-amber-400"></i>
+            <span>Level Scaling Formula</span>
           </h4>
-          <div id="manual-level-inputs" class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto pr-1">
-            <!-- Dynamically generated level inputs -->
+          <p class="text-xs text-slate-400">Base XP required per level. Level threshold is calculated as: <strong>Base XP × Level<sup>1.2</sup></strong></p>
+          <div class="flex items-center gap-3">
+            <label for="base-xp-step" class="text-xs text-slate-300 whitespace-nowrap">Base XP Multiplier:</label>
+            <input type="number" id="base-xp-step" value="100" min="10" step="10" 
+                   class="w-32 bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 text-xs font-mono text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <button id="btn-save-level-config" type="button" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition">
+              Save Formula
+            </button>
           </div>
         </div>
-      </div>
 
-      <div class="pt-2 flex justify-end space-x-3">
-        <button type="button" class="btn-close-modal px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
-          Cancel
-        </button>
-        <button id="btn-save-settings" type="button" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition shadow-md shadow-emerald-900/40">
-          Save Settings
-        </button>
+        <!-- Sample Data Reset -->
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-bold text-white">Load Demo Sample Classes</h4>
+            <p class="text-xs text-slate-400">Populate the app with demo classes to test out features</p>
+          </div>
+          <button id="btn-reset-demo" type="button" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold text-xs rounded-xl border border-slate-700 transition">
+            Load Demo Data
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Data Export & CSV Modal -->
-  <div id="modal-export" class="fixed inset-0 z-40 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-6">
+  <!-- Activity History Log Modal -->
+  <div id="modal-history" class="fixed inset-0 z-40 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
-            <i class="fa-solid fa-file-export"></i>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold font-heading text-white">Export Class XP Data</h3>
-            <p class="text-xs text-slate-400">Download reports for spreadsheets or backup state</p>
-          </div>
-        </div>
-        <button class="btn-close-modal text-slate-500 hover:text-slate-300 p-2 text-xl">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <!-- CSV Download Section -->
-        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-          <h4 class="text-sm font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-file-csv text-emerald-400"></i>
-            <span>Export to CSV Spreadsheet</span>
-          </h4>
-          <p class="text-xs text-slate-400">Generates a CSV file containing all classes, current levels, total XP, and history logs readable in Excel or Google Sheets.</p>
-          <button id="btn-export-csv" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-md shadow-emerald-900/40">
-            Download CSV Gradebook Report
-          </button>
-        </div>
-
-        <!-- JSON Backup Section -->
-        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-          <h4 class="text-sm font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-database text-indigo-400"></i>
-            <span>Backup / Restore JSON</span>
-          </h4>
-          <p class="text-xs text-slate-400">Save full app data to a JSON backup file or restore from a previously saved JSON file.</p>
-          <div class="flex space-x-2 pt-1">
-            <button id="btn-export-json" class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold rounded-xl transition">
-              Download JSON
-            </button>
-            <label class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold rounded-xl transition text-center cursor-pointer">
-              Restore JSON
-              <input type="file" id="input-import-json" accept=".json" class="hidden">
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-2 flex justify-end">
-        <button class="btn-close-modal px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Class History Log Modal -->
-  <div id="modal-history" class="fixed inset-0 z-40 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
             <i class="fa-solid fa-clock-rotate-left"></i>
           </div>
           <div>
-            <h3 id="history-class-title" class="text-xl font-bold font-heading text-white">Class History Log</h3>
-            <p class="text-xs text-slate-400">Recent XP transactions and rewards</p>
+            <h3 id="history-modal-title" class="text-xl font-bold font-heading text-white">Class Activity Log</h3>
+            <p class="text-xs text-slate-400">XP history and recent achievements</p>
           </div>
         </div>
         <button class="btn-close-modal text-slate-500 hover:text-slate-300 p-2 text-xl">
@@ -645,1049 +605,869 @@
       </div>
 
       <div id="history-log-list" class="space-y-3 max-h-80 overflow-y-auto pr-1">
-        <!-- Dynamically populated history log items -->
+        <!-- Log entries rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Data Modal -->
+  <div id="modal-export" class="fixed inset-0 z-40 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-file-export"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold font-heading text-white">Export & Backup</h3>
+            <p class="text-xs text-slate-400">Download reports and raw data</p>
+          </div>
+        </div>
+        <button class="btn-close-modal text-slate-500 hover:text-slate-300 p-2 text-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
 
-      <div class="pt-2 flex justify-end">
-        <button class="btn-close-modal px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
-          Close Log
+      <div class="space-y-3">
+        <button id="btn-export-csv" class="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl flex items-center justify-between text-white font-semibold text-sm transition">
+          <span class="flex items-center space-x-3">
+            <i class="fa-solid fa-file-csv text-emerald-400 text-xl"></i>
+            <span>Export CSV Leaderboard</span>
+          </span>
+          <i class="fa-solid fa-download text-slate-400"></i>
+        </button>
+
+        <button id="btn-export-json" class="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl flex items-center justify-between text-white font-semibold text-sm transition">
+          <span class="flex items-center space-x-3">
+            <i class="fa-solid fa-code text-indigo-400 text-xl"></i>
+            <span>Download JSON Backup</span>
+          </span>
+          <i class="fa-solid fa-download text-slate-400"></i>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Level Up Banner Popup Modal -->
-  <div id="modal-levelup" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4">
-    <div class="bg-slate-900 border-2 border-amber-500/50 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center space-y-4 pulse-animation">
-      <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-amber-200 flex items-center justify-center text-slate-950 text-4xl font-black shadow-lg shadow-amber-500/30">
-        <i class="fa-solid fa-trophy"></i>
-      </div>
-      
-      <div class="space-y-1">
-        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Level Up Achieved!</span>
-        <h2 id="levelup-class-name" class="text-2xl font-black font-heading text-white">Class Name</h2>
-      </div>
-
-      <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800">
-        <div class="text-xs text-slate-400">Now Reached</div>
-        <div id="levelup-new-level" class="text-3xl font-bold font-heading text-emerald-400">Level 2</div>
-      </div>
-
-      <button id="btn-close-levelup" class="w-full py-3 bg-gradient-to-r from-amber-500 to-emerald-500 text-slate-950 font-black rounded-2xl transition hover:brightness-110 shadow-lg text-base">
-        Awesome! Continue 🚀
-      </button>
-    </div>
-  </div>
+  <!-- Toast Message Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
   <script>
-    // --- Application State ---
-    const DEFAULT_PASSCODE = "1234";
-    const DEFAULT_LEVEL_THRESHOLDS = [
-      0, 100, 250, 450, 700, 1000, 1400, 1900, 2500, 3200, 
-      4000, 5000, 6200, 7600, 9200, 11000, 13000, 15500, 18500, 22000
-    ];
-
-    let state = {
-      isTeacher: false,
-      passcode: DEFAULT_PASSCODE,
-      levelThresholds: [...DEFAULT_LEVEL_THRESHOLDS],
-      classes: []
+    // Main state store
+    let appState = {
+      isTeacherMode: false,
+      passcode: '1234',
+      baseXpMultiplier: 100,
+      classes: [],
+      selectedClassId: null,
+      selectedTag: null,
+      selectedBatchIds: new Set(),
+      firebaseConnected: false,
+      searchQuery: '',
+      sortBy: 'name'
     };
 
-    // --- Firebase Cloud Storage Globals ---
-    let db = null;
-    let auth = null;
-    let currentUser = null;
-    let isCloudConnected = false;
+    // KVDB Cloud Configuration
+    const KVDB_BUCKET_ID = 'KZvxw4DNrhHnsBRRiXtB4V';
+    const KVDB_KEY = 'classquest_state';
+    const KVDB_URL = `https://kvdb.io/${KVDB_BUCKET_ID}/${KVDB_KEY}`;
 
-    // --- Web Audio API Sound Generator ---
-    class SoundFX {
-      constructor() {
-        this.ctx = null;
-      }
-
+    // Web Audio Synthesizer for Retro Gamified Sound FX
+    const SoundFX = {
+      ctx: null,
       init() {
         if (!this.ctx) {
-          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
         }
-      }
-
-      playXPChime() {
+      },
+      playXpChime() {
         try {
           this.init();
-          const now = this.ctx.currentTime;
-          const osc1 = this.ctx.createOscillator();
-          const osc2 = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-
-          osc1.type = 'sine';
-          osc2.type = 'triangle';
-
-          osc1.frequency.setValueAtTime(523.25, now); // C5
-          osc1.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
-          osc1.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
-
-          osc2.frequency.setValueAtTime(1046.50, now + 0.1); // C6
-
-          gain.gain.setValueAtTime(0.15, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-
-          osc1.connect(gain);
-          osc2.connect(gain);
-          gain.connect(this.ctx.destination);
-
-          osc1.start(now);
-          osc2.start(now);
-          osc1.stop(now + 0.4);
-          osc2.stop(now + 0.4);
-        } catch(e) {}
-      }
-
-      playLevelUp() {
-        try {
-          this.init();
-          const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
-          notes.forEach((freq, idx) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            const start = this.ctx.currentTime + (idx * 0.08);
-
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(freq, start);
-
-            gain.gain.setValueAtTime(0.2, start);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.3);
-
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-
-            osc.start(start);
-            osc.stop(start + 0.3);
-          });
-        } catch(e) {}
-      }
-
-      playDeduct() {
-        try {
-          this.init();
-          const now = this.ctx.currentTime;
+          if (!this.ctx) return;
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(300, now);
-          osc.frequency.exponentialRampToValueAtTime(150, now + 0.2);
-
-          gain.gain.setValueAtTime(0.15, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
+          osc.frequency.exponentialRampToValueAtTime(659.25, this.ctx.currentTime + 0.1); // E5
+          osc.frequency.exponentialRampToValueAtTime(783.99, this.ctx.currentTime + 0.2); // G5
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-
-          osc.start(now);
-          osc.stop(now + 0.25);
-        } catch(e) {}
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.3);
+        } catch (e) {
+          // Audio suppressed or unsupported
+        }
+      },
+      playLevelUpSound() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const notes = [440, 554.37, 659.25, 880]; // A4, C#5, E5, A5
+          notes.forEach((freq, index) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + index * 0.08);
+            gain.gain.setValueAtTime(0.2, now + index * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + index * 0.08 + 0.25);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + index * 0.08);
+            osc.stop(now + index * 0.08 + 0.25);
+          });
+        } catch (e) {
+          // Audio suppressed
+        }
       }
+    };
+
+    // Calculates Level and Next Level threshold based on Total XP
+    function getLevelInfo(totalXp) {
+      const baseXp = appState.baseXpMultiplier || 100;
+      let level = 1;
+      let xpForCurrentLevel = 0;
+      let xpForNextLevel = baseXp;
+
+      while (totalXp >= xpForNextLevel) {
+        level++;
+        xpForCurrentLevel = xpForNextLevel;
+        xpForNextLevel = Math.floor(xpForCurrentLevel + baseXp * Math.pow(level, 1.2));
+      }
+
+      const xpInCurrentLevel = totalXp - xpForCurrentLevel;
+      const xpNeededForNext = xpForNextLevel - xpForCurrentLevel;
+      const progressPercent = Math.min(100, Math.max(0, Math.floor((xpInCurrentLevel / xpNeededForNext) * 100)));
+
+      return {
+        level,
+        currentXp: totalXp,
+        xpInCurrentLevel,
+        xpNeededForNext,
+        nextLevelTotalXp: xpForNextLevel,
+        progressPercent
+      };
     }
 
-    const sound = new SoundFX();
-
-    // --- Initial Demo Data Seed ---
+    // Default Sample Data generator
     function getDefaultClasses() {
       return [
         {
           id: 'cls-1',
-          name: 'Period 1 - Biology Lab',
-          icon: 'fa-flask',
+          name: 'Period 1 - Mythic Math',
+          icon: 'fa-calculator',
           color: 'emerald',
-          xp: 480,
+          xp: 420,
           history: [
-            { id: 'h-1', amount: 300, category: 'Project Completed', note: 'Cell Structure Models', date: new Date(Date.now() - 86400000 * 3).toISOString() },
-            { id: 'h-2', amount: 180, category: 'Quiz Excellence', note: 'Microscope Quiz', date: new Date(Date.now() - 86400000).toISOString() }
+            { id: 'h1', amount: 50, tag: 'Quiz Excellence', reason: 'Highest average on Algebra quiz', timestamp: Date.now() - 86400000 },
+            { id: 'h2', amount: 20, tag: 'Participation', reason: 'Great class discussion', timestamp: Date.now() - 43200000 }
           ]
         },
         {
           id: 'cls-2',
-          name: 'Period 3 - Math Wizards',
-          icon: 'fa-calculator',
+          name: 'Period 3 - Science Explorers',
+          icon: 'fa-flask',
           color: 'indigo',
-          xp: 1150,
+          xp: 850,
           history: [
-            { id: 'h-3', amount: 500, category: 'Participation', note: 'Algebra Challenge', date: new Date(Date.now() - 86400000 * 5).toISOString() },
-            { id: 'h-4', amount: 650, category: 'Teamwork', note: 'Group Problem Solving', date: new Date(Date.now() - 86400000 * 2).toISOString() }
+            { id: 'h3', amount: 100, tag: 'Project Completed', reason: 'Volcano Lab demonstration', timestamp: Date.now() - 172800000 }
           ]
         },
         {
           id: 'cls-3',
-          name: 'Period 5 - Literature Guild',
-          icon: 'fa-book-open',
+          name: 'Period 5 - Code Wizards',
+          icon: 'fa-code',
           color: 'purple',
-          xp: 290,
+          xp: 1200,
           history: [
-            { id: 'h-5', amount: 290, category: 'Great Behavior', note: 'Reading Hour Focus', date: new Date(Date.now() - 86400000 * 4).toISOString() }
+            { id: 'h4', amount: 150, tag: 'Teamwork', reason: 'Hackathon team victory', timestamp: Date.now() - 259200000 }
           ]
         }
       ];
     }
 
-    // --- Cloud Storage / Persistence Setup ---
-    async function initCloudStorage() {
-      const appId = typeof __app_id !== 'undefined' ? __app_id : 'classquest-xp-app';
-      const sdk = window.FirebaseSDK;
-
-      if (!sdk || typeof __firebase_config === 'undefined' || !__firebase_config) {
-        console.warn("Cloud config not present. Running in local mode.");
-        setSyncStatus('offline', 'Local Memory Mode');
-        loadLocalFallback();
-        return;
-      }
+    async function initKvdbCloud() {
+      const syncDot = document.getElementById('sync-dot');
+      const syncText = document.getElementById('sync-text');
+      const modeLabel = document.getElementById('stat-mode-label');
 
       try {
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = sdk.initializeApp(firebaseConfig);
-        db = sdk.getFirestore(app);
-        auth = sdk.getAuth(app);
-
-        // Authenticate anonymously or via token
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          const userCred = await sdk.signInWithCustomToken(auth, __initial_auth_token);
-          currentUser = userCred.user;
+        syncText.textContent = "Connecting KVDB...";
+        const response = await fetch(KVDB_URL);
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Array.isArray(data.classes)) {
+            appState.classes = data.classes;
+            if (data.passcode) appState.passcode = data.passcode;
+            if (data.baseXpMultiplier) appState.baseXpMultiplier = data.baseXpMultiplier;
+          } else {
+            appState.classes = getDefaultClasses();
+            await saveKvdbState();
+          }
+        } else if (response.status === 404) {
+          // Key doesn't exist yet in bucket, initialize with defaults
+          appState.classes = getDefaultClasses();
+          await saveKvdbState();
         } else {
-          const userCred = await sdk.signInAnonymously(auth);
-          currentUser = userCred.user;
+          throw new Error(`KVDB response status ${response.status}`);
         }
 
-        sdk.onAuthStateChanged(auth, (user) => {
-          if (user) currentUser = user;
-        });
-
-        isCloudConnected = true;
-        setSyncStatus('online', 'Live Cloud Sync');
-
-        // Setup Real-time Snapshot Listener for Public Classes
-        const classesColRef = sdk.collection(db, 'artifacts', appId, 'public', 'data', 'classes');
-        sdk.onSnapshot(classesColRef, (snapshot) => {
-          if (snapshot.empty) {
-            // Seed cloud with default classes if empty
-            const defaults = getDefaultClasses();
-            defaults.forEach(c => {
-              sdk.setDoc(sdk.doc(db, 'artifacts', appId, 'public', 'data', 'classes', c.id), c);
-            });
-          } else {
-            const loaded = [];
-            snapshot.forEach(docSnap => {
-              loaded.push(docSnap.data());
-            });
-            state.classes = loaded;
-            renderApp();
-          }
-        }, (err) => {
-          console.error("Cloud classes snapshot error:", err);
-          setSyncStatus('offline', 'Sync Interrupted');
-        });
-
-        // Setup Real-time Snapshot Listener for Global Settings
-        const settingsDocRef = sdk.doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
-        sdk.onSnapshot(settingsDocRef, (docSnap) => {
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            if (data.passcode) state.passcode = data.passcode;
-            if (data.levelThresholds) state.levelThresholds = data.levelThresholds;
-          } else {
-            sdk.setDoc(settingsDocRef, {
-              passcode: DEFAULT_PASSCODE,
-              levelThresholds: DEFAULT_LEVEL_THRESHOLDS
-            });
-          }
-        }, (err) => {
-          console.error("Cloud settings snapshot error:", err);
-        });
-
+        appState.firebaseConnected = true;
+        syncDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+        syncText.textContent = "KVDB Connected";
+        modeLabel.textContent = "KVDB Cloud Sync";
+        renderDashboard();
       } catch (err) {
-        console.error("Failed to initialize cloud connection:", err);
-        setSyncStatus('offline', 'Offline Mode');
-        loadLocalFallback();
+        console.warn("KVDB Cloud connection failed, falling back to local session:", err);
+        fallbackToLocalStorage();
       }
     }
 
-    function loadLocalFallback() {
-      const saved = localStorage.getItem('classquest_state');
+    async function saveKvdbState() {
+      try {
+        const payload = {
+          classes: appState.classes,
+          passcode: appState.passcode,
+          baseXpMultiplier: appState.baseXpMultiplier,
+          updatedAt: Date.now()
+        };
+        
+        const response = await fetch(KVDB_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('KVDB write failed');
+        }
+
+        const syncDot = document.getElementById('sync-dot');
+        const syncText = document.getElementById('sync-text');
+        syncDot.className = "w-2 h-2 rounded-full bg-emerald-400";
+        syncText.textContent = "KVDB Connected";
+      } catch (err) {
+        console.error("Failed to sync state to KVDB:", err);
+        localStorage.setItem('classquest_local_data', JSON.stringify({
+          classes: appState.classes,
+          passcode: appState.passcode,
+          baseXpMultiplier: appState.baseXpMultiplier
+        }));
+      }
+    }
+
+    function fallbackToLocalStorage() {
+      appState.firebaseConnected = false;
+      const syncDot = document.getElementById('sync-dot');
+      const syncText = document.getElementById('sync-text');
+      const modeLabel = document.getElementById('stat-mode-label');
+
+      syncDot.className = "w-2 h-2 rounded-full bg-teal-400";
+      syncText.textContent = "Local Session";
+      modeLabel.textContent = "Local Memory";
+
+      const saved = localStorage.getItem('classquest_local_data');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          state.passcode = parsed.passcode || DEFAULT_PASSCODE;
-          state.levelThresholds = parsed.levelThresholds || [...DEFAULT_LEVEL_THRESHOLDS];
-          state.classes = parsed.classes || getDefaultClasses();
+          appState.classes = parsed.classes || getDefaultClasses();
+          if (parsed.passcode) appState.passcode = parsed.passcode;
+          if (parsed.baseXpMultiplier) appState.baseXpMultiplier = parsed.baseXpMultiplier;
         } catch (e) {
-          state.classes = getDefaultClasses();
+          appState.classes = getDefaultClasses();
         }
       } else {
-        state.classes = getDefaultClasses();
+        appState.classes = getDefaultClasses();
       }
-      renderApp();
+      renderDashboard();
     }
 
-    // --- Save Helpers ---
-    async function saveClassToCloud(cls) {
-      if (!isCloudConnected || !db || !currentUser) {
-        localStorage.setItem('classquest_state', JSON.stringify({
-          passcode: state.passcode,
-          levelThresholds: state.levelThresholds,
-          classes: state.classes
-        }));
-        renderApp();
-        return;
-      }
-
-      try {
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'classquest-xp-app';
-        const sdk = window.FirebaseSDK;
-        await sdk.setDoc(sdk.doc(db, 'artifacts', appId, 'public', 'data', 'classes', cls.id), cls);
-      } catch (err) {
-        console.error("Error saving class to cloud:", err);
-      }
+    async function saveState() {
+      await saveKvdbState();
     }
 
-    async function deleteClassFromCloud(classId) {
-      if (!isCloudConnected || !db || !currentUser) {
-        state.classes = state.classes.filter(c => c.id !== classId);
-        localStorage.setItem('classquest_state', JSON.stringify({
-          passcode: state.passcode,
-          levelThresholds: state.levelThresholds,
-          classes: state.classes
-        }));
-        renderApp();
-        return;
-      }
-
-      try {
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'classquest-xp-app';
-        const sdk = window.FirebaseSDK;
-        await sdk.deleteDoc(sdk.doc(db, 'artifacts', appId, 'public', 'data', 'classes', classId));
-      } catch (err) {
-        console.error("Error deleting class from cloud:", err);
-      }
-    }
-
-    async function saveSettingsToCloud() {
-      if (!isCloudConnected || !db || !currentUser) {
-        localStorage.setItem('classquest_state', JSON.stringify({
-          passcode: state.passcode,
-          levelThresholds: state.levelThresholds,
-          classes: state.classes
-        }));
-        return;
-      }
-
-      try {
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'classquest-xp-app';
-        const sdk = window.FirebaseSDK;
-        await sdk.setDoc(sdk.doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config'), {
-          passcode: state.passcode,
-          levelThresholds: state.levelThresholds
-        });
-      } catch (err) {
-        console.error("Error saving settings to cloud:", err);
-      }
-    }
-
-    function setSyncStatus(type, label) {
-      const dot = document.getElementById('sync-dot');
-      const text = document.getElementById('sync-text');
-      const statusBox = document.getElementById('sync-status');
-
-      if (type === 'online') {
-        dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
-        text.textContent = label;
-        statusBox.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800";
+    async function saveClassToStore(classItem) {
+      const idx = appState.classes.findIndex(c => c.id === classItem.id);
+      if (idx >= 0) {
+        appState.classes[idx] = classItem;
       } else {
-        dot.className = "w-2 h-2 rounded-full bg-amber-400";
-        text.textContent = label;
-        statusBox.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700";
+        appState.classes.push(classItem);
       }
+      await saveKvdbState();
+      renderDashboard();
     }
-// Replace 'YOUR_BUCKET_ID' with your actual kvdb.io bucket key
-const KVDB_BUCKET = 'KZvxw4DNrhHnsBRRiXtB4V'; 
-const KVDB_KEY = 'classroom_xp_data';
-const KVDB_URL = `https://kvdb.io/${KVDB_BUCKET}/${KVDB_KEY}`;
 
-// Load data from KVdb Cloud
-async function loadFromCloud() {
-  try {
-    const response = await fetch(KVDB_URL);
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Successfully fetched data from KVdb Cloud:', data);
-      return data;
-    } else if (response.status === 404) {
-      console.log('No cloud data found yet. Starting fresh.');
-      return null;
+    async function deleteClassFromStore(classId) {
+      appState.classes = appState.classes.filter(c => c.id !== classId);
+      await saveKvdbState();
+      renderDashboard();
     }
-  } catch (error) {
-    console.error('Error fetching from KVdb:', error);
-  }
-  return null;
-}
 
-// Save data to KVdb Cloud
-async function saveToCloud(appState) {
-  try {
-    const response = await fetch(KVDB_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(appState)
-    });
-    
-    if (response.ok) {
-      updateSyncStatus('Cloud Saved', 'emerald');
-    } else {
-      updateSyncStatus('Sync Error', 'rose');
-    }
-  } catch (error) {
-    console.error('Error saving to KVdb:', error);
-    updateSyncStatus('Offline', 'amber');
-  }
-}
+    function renderDashboard() {
+      const grid = document.getElementById('class-grid');
+      const emptyState = document.getElementById('empty-state');
+      const totalClassesEl = document.getElementById('stat-total-classes');
+      const totalXpEl = document.getElementById('stat-total-xp');
 
-// Polling mechanism to keep student views updated in real-time (every 5 seconds)
-function startCloudPolling(onDataUpdate) {
-  setInterval(async () => {
-    const freshData = await loadFromCloud();
-    if (freshData) {
-      onDataUpdate(freshData);
-    }
-  }, 5000);
-}
-    // --- Level Helpers ---
-    function getLevelInfo(xp) {
-      const thresholds = state.levelThresholds;
-      let level = 1;
-      for (let i = 0; i < thresholds.length; i++) {
-        if (xp >= thresholds[i]) {
-          level = i + 1;
-        } else {
-          break;
+      // Filter and Sort classes
+      let filtered = [...appState.classes];
+      if (appState.searchQuery.trim() !== '') {
+        const q = appState.searchQuery.toLowerCase();
+        filtered = filtered.filter(c => c.name.toLowerCase().includes(q));
+      }
+
+      // Sort logic
+      filtered.sort((a, b) => {
+        if (appState.sortBy === 'name') return a.name.localeCompare(b.name);
+        if (appState.sortBy === 'xp-desc') return b.xp - a.xp;
+        if (appState.sortBy === 'level-desc') {
+          return getLevelInfo(b.xp).level - getLevelInfo(a.xp).level;
         }
-      }
-
-      const currentLevelXP = thresholds[level - 1] || 0;
-      const nextLevelXP = thresholds[level] || (currentLevelXP + 5000);
-
-      const xpInCurrentLevel = xp - currentLevelXP;
-      const xpNeededForNext = nextLevelXP - currentLevelXP;
-      const progressPercent = Math.min(100, Math.max(0, Math.floor((xpInCurrentLevel / xpNeededForNext) * 100)));
-
-      return {
-        level,
-        currentLevelXP,
-        nextLevelXP,
-        xpInCurrentLevel,
-        xpNeededForNext,
-        progressPercent,
-        remainingXP: Math.max(0, nextLevelXP - xp)
-      };
-    }
-
-    // --- Render Dashboard UI ---
-    function renderApp() {
-      // Toggle teacher mode visibility
-      const teacherOnlyElems = document.querySelectorAll('.teacher-only');
-      teacherOnlyElems.forEach(el => {
-        if (state.isTeacher) {
-          el.classList.remove('hidden');
-          if (el.tagName === 'BUTTON') el.classList.add('flex');
-        } else {
-          el.classList.add('hidden');
-          el.classList.remove('flex');
+        if (appState.sortBy === 'progress-desc') {
+          return getLevelInfo(b.xp).progressPercent - getLevelInfo(a.xp).progressPercent;
         }
-      });
-
-      // Mode badges
-      const badgeText = document.getElementById('mode-badge-text');
-      const badgeIcon = document.getElementById('mode-badge-icon');
-      const badgeBox = document.getElementById('mode-badge');
-
-      if (state.isTeacher) {
-        badgeText.textContent = "Teacher Mode";
-        badgeIcon.className = "fa-solid fa-user-check";
-        badgeBox.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700 glow-xp";
-        document.getElementById('teacher-btn-text').textContent = "Lock Teacher Mode";
-        document.getElementById('teacher-btn-icon').className = "fa-solid fa-lock text-rose-400";
-        document.getElementById('empty-student-msg').classList.add('hidden');
-      } else {
-        badgeText.textContent = "Student View";
-        badgeIcon.className = "fa-solid fa-eye";
-        badgeBox.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-950/80 text-blue-300 border border-blue-800";
-        document.getElementById('teacher-btn-text').textContent = "Teacher Login";
-        document.getElementById('teacher-btn-icon').className = "fa-solid fa-user-gear text-emerald-400";
-        document.getElementById('empty-student-msg').classList.remove('hidden');
-      }
-
-      // Stats
-      document.getElementById('stat-total-classes').textContent = state.classes.length;
-      const totalXP = state.classes.reduce((sum, c) => sum + (c.xp || 0), 0);
-      document.getElementById('stat-total-xp').textContent = `${totalXP.toLocaleString()} XP`;
-
-      // Sort classes
-      const sortBy = document.getElementById('sort-classes').value;
-      const sortedClasses = [...state.classes].sort((a, b) => {
-        if (sortBy === 'name') return a.name.localeCompare(b.name);
-        if (sortBy === 'xp-desc') return b.xp - a.xp;
-        if (sortBy === 'level-desc') return getLevelInfo(b.xp).level - getLevelInfo(a.xp).level;
-        if (sortBy === 'progress-desc') return getLevelInfo(b.xp).progressPercent - getLevelInfo(a.xp).progressPercent;
         return 0;
       });
 
-      // Render Cards
-      const grid = document.getElementById('class-grid');
-      const emptyState = document.getElementById('empty-state');
+      // Update Stats
+      totalClassesEl.textContent = appState.classes.length;
+      const grandTotalXp = appState.classes.reduce((acc, c) => acc + (c.xp || 0), 0);
+      totalXpEl.textContent = `${grandTotalXp.toLocaleString()} XP`;
 
-      grid.innerHTML = '';
-      if (sortedClasses.length === 0) {
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
         emptyState.classList.remove('hidden');
-      } else {
-        emptyState.classList.add('hidden');
-        sortedClasses.forEach(cls => {
-          grid.appendChild(createClassCard(cls));
-        });
+        return;
       }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = '';
+
+      filtered.forEach((classItem) => {
+        const levelInfo = getLevelInfo(classItem.xp || 0);
+        const cardColorClass = `card-${classItem.color || 'emerald'}`;
+        
+        const card = document.createElement('div');
+        card.className = `bg-slate-900 border border-slate-800 rounded-3xl p-6 relative flex flex-col justify-between shadow-xl ${cardColorClass} hover:border-slate-700 transition duration-300 group`;
+
+        card.innerHTML = `
+          <div>
+            <!-- Header Row -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl text-emerald-400 shadow-inner group-hover:scale-105 transition">
+                  <i class="fa-solid ${classItem.icon || 'fa-graduation-cap'}"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-heading text-white line-clamp-1">${escapeHtml(classItem.name)}</h3>
+                  <div class="flex items-center space-x-2 mt-0.5">
+                    <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                      Level ${levelInfo.level}
+                    </span>
+                    <button class="btn-view-history text-xs text-slate-400 hover:text-emerald-400 transition flex items-center gap-1" data-id="${classItem.id}">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Log
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Teacher Controls dropdown / buttons -->
+              <div class="teacher-only ${appState.isTeacherMode ? '' : 'hidden'} flex items-center space-x-1">
+                <button data-id="${classItem.id}" class="btn-edit-class p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" title="Edit Class">
+                  <i class="fa-solid fa-pen-to-square text-xs"></i>
+                </button>
+                <button data-id="${classItem.id}" data-name="${escapeHtml(classItem.name)}" class="btn-delete-class p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition" title="Delete Class">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- XP Progress Bar -->
+            <div class="space-y-2 my-4">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-slate-300">${(classItem.xp || 0).toLocaleString()} <span class="text-slate-500 font-normal">XP</span></span>
+                <span class="text-slate-400 font-medium">${levelInfo.xpInCurrentLevel} / ${levelInfo.xpNeededForNext} XP to Lvl ${levelInfo.level + 1}</span>
+              </div>
+              <div class="w-full h-3.5 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-800 shadow-inner relative">
+                <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 glow-xp" style="width: ${levelInfo.progressPercent}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium">
+              ${(classItem.history || []).length} activity logs
+            </span>
+
+            <div class="flex items-center space-x-2">
+              <button data-id="${classItem.id}" data-amount="10" class="teacher-only ${appState.isTeacherMode ? '' : 'hidden'} btn-quick-add px-2.5 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 font-bold text-xs rounded-xl transition">
+                +10 XP
+              </button>
+              <button data-id="${classItem.id}" class="btn-open-award px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition shadow-md shadow-emerald-900/30 flex items-center space-x-1">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Award XP</span>
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
     }
 
-    function createClassCard(cls) {
-      const lvl = getLevelInfo(cls.xp);
-      const card = document.createElement('div');
-      
-      const themeColors = {
-        emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'card-emerald', bar: 'bg-emerald-500' },
-        indigo: { bg: 'bg-indigo-500/10', text: 'text-indigo-400', border: 'card-indigo', bar: 'bg-indigo-500' },
-        purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'card-purple', bar: 'bg-purple-500' },
-        amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'card-amber', bar: 'bg-amber-500' },
-        rose: { bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'card-rose', bar: 'bg-rose-500' },
-        cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'card-cyan', bar: 'bg-cyan-500' }
-      };
+    function updateTeacherVisibility() {
+      const teacherOnlyElements = document.querySelectorAll('.teacher-only');
+      const teacherBtnText = document.getElementById('teacher-btn-text');
+      const teacherBtnIcon = document.getElementById('teacher-btn-icon');
+      const modeBadge = document.getElementById('mode-badge');
+      const modeBadgeText = document.getElementById('mode-badge-text');
+      const modeBadgeIcon = document.getElementById('mode-badge-icon');
+      const emptyStudentMsg = document.getElementById('empty-student-msg');
 
-      const theme = themeColors[cls.color] || themeColors.emerald;
-
-      card.className = `bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl relative flex flex-col justify-between transition-all hover:border-slate-700 ${theme.border}`;
-
-      card.innerHTML = `
-        <div>
-          <!-- Header -->
-          <div class="flex items-start justify-between">
-            <div class="flex items-center space-x-3">
-              <div class="w-12 h-12 rounded-2xl ${theme.bg} ${theme.text} flex items-center justify-center text-xl font-bold border border-slate-800">
-                <i class="fa-solid ${cls.icon}"></i>
-              </div>
-              <div>
-                <h3 class="text-lg font-bold font-heading text-white line-clamp-1">${cls.name}</h3>
-                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${theme.bg} ${theme.text} border border-slate-800 mt-0.5">
-                  Level ${lvl.level}
-                </span>
-              </div>
-            </div>
-
-            <!-- Teacher Edit Dropdown -->
-            ${state.isTeacher ? `
-            <div class="flex items-center space-x-1">
-              <button onclick="openEditClassModal('${cls.id}')" class="text-slate-500 hover:text-slate-200 p-1.5 text-sm rounded-lg hover:bg-slate-800 transition" title="Edit Class">
-                <i class="fa-solid fa-pen"></i>
-              </button>
-              <button onclick="confirmDeleteClass('${cls.id}')" class="text-slate-500 hover:text-rose-400 p-1.5 text-sm rounded-lg hover:bg-slate-800 transition" title="Delete Class">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </div>
-            ` : ''}
-          </div>
-
-          <!-- XP Progress Bar -->
-          <div class="mt-6 space-y-2">
-            <div class="flex justify-between text-xs font-bold">
-              <span class="text-slate-400">Progress to Level ${lvl.level + 1}</span>
-              <span class="${theme.text}">${cls.xp.toLocaleString()} XP</span>
-            </div>
-
-            <div class="w-full bg-slate-950 rounded-full h-3.5 p-0.5 border border-slate-800 overflow-hidden">
-              <div class="${theme.bar} h-full rounded-full transition-all duration-500" style="width: ${lvl.progressPercent}%"></div>
-            </div>
-
-            <div class="flex justify-between text-[11px] text-slate-500 font-medium pt-0.5">
-              <span>${lvl.xpInCurrentLevel} / ${lvl.xpNeededForNext} XP</span>
-              <span>${lvl.remainingXP} XP needed</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer Action Buttons -->
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
-          <button onclick="openHistoryModal('${cls.id}')" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border border-slate-700/60 transition">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span>Logs (${cls.history ? cls.history.length : 0})</span>
-          </button>
-
-          ${state.isTeacher ? `
-          <div class="flex items-center space-x-1.5">
-            <button onclick="quickAddXP('${cls.id}', 10)" class="px-2.5 py-2 bg-slate-800 hover:bg-emerald-950 hover:text-emerald-400 text-emerald-500 rounded-xl text-xs font-bold border border-slate-700 transition">
-              +10
-            </button>
-            <button onclick="quickAddXP('${cls.id}', 25)" class="px-2.5 py-2 bg-slate-800 hover:bg-emerald-950 hover:text-emerald-400 text-emerald-500 rounded-xl text-xs font-bold border border-slate-700 transition">
-              +25
-            </button>
-            <button onclick="openAwardModal('${cls.id}')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-900/30 transition flex items-center space-x-1">
-              <i class="fa-solid fa-bolt"></i>
-              <span>Award</span>
-            </button>
-          </div>
-          ` : `
-          <div class="text-xs text-slate-500 font-medium italic flex items-center space-x-1">
-            <i class="fa-solid fa-cloud-arrow-down text-emerald-500/70"></i>
-            <span>Live Cloud Synced</span>
-          </div>
-          `}
-        </div>
-      `;
-
-      return card;
-    }
-
-    // --- XP Operations ---
-    async function awardXP(classId, amount, category = 'General', note = '') {
-      const cls = state.classes.find(c => c.id === classId);
-      if (!cls) return;
-
-      const oldLevel = getLevelInfo(cls.xp).level;
-      cls.xp = Math.max(0, cls.xp + amount);
-      const newLevel = getLevelInfo(cls.xp).level;
-
-      if (!cls.history) cls.history = [];
-      cls.history.unshift({
-        id: 'h-' + Date.now(),
-        amount: amount,
-        category: category,
-        note: note,
-        date: new Date().toISOString()
+      teacherOnlyElements.forEach(el => {
+        if (appState.isTeacherMode) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
       });
 
-      await saveClassToCloud(cls);
-
-      if (amount > 0) {
-        sound.playXPChime();
-      } else if (amount < 0) {
-        sound.playDeduct();
+      if (appState.isTeacherMode) {
+        teacherBtnText.textContent = "Lock Teacher Mode";
+        teacherBtnIcon.className = "fa-solid fa-lock text-rose-400";
+        modeBadge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800 transition-all";
+        modeBadgeText.textContent = "Teacher Mode";
+        modeBadgeIcon.className = "fa-solid fa-user-shield text-emerald-400";
+        if (emptyStudentMsg) emptyStudentMsg.classList.add('hidden');
+      } else {
+        teacherBtnText.textContent = "Teacher Login";
+        teacherBtnIcon.className = "fa-solid fa-user-gear text-emerald-400";
+        modeBadge.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-950/80 text-blue-300 border border-blue-800 transition-all";
+        modeBadgeText.textContent = "Student View";
+        modeBadgeIcon.className = "fa-solid fa-eye text-blue-400";
+        if (emptyStudentMsg) emptyStudentMsg.classList.remove('hidden');
       }
 
-      // Check level up
-      if (newLevel > oldLevel) {
-        triggerLevelUp(cls.name, newLevel);
-      }
+      renderDashboard();
     }
 
-    function quickAddXP(classId, amount) {
-      awardXP(classId, amount, 'Quick Reward', 'Teacher Quick Award');
-    }
-
-    function triggerLevelUp(className, newLevel) {
-      sound.playLevelUp();
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
       
-      // Fire Confetti
-      try {
+      const bgColor = type === 'success' ? 'bg-emerald-900/90 border-emerald-700 text-emerald-200' : 'bg-rose-900/90 border-rose-700 text-rose-200';
+      const icon = type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-rose-400';
+
+      toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-2xl border ${bgColor} backdrop-blur shadow-2xl transition-all duration-300 opacity-0 transform translate-y-2 text-xs font-semibold`;
+      toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i> <span>${escapeHtml(message)}</span>`;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-2');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+
+    async function processXpAward(classId, amount, tag = 'General', reason = '') {
+      const classItem = appState.classes.find(c => c.id === classId);
+      if (!classItem) return;
+
+      const oldLevel = getLevelInfo(classItem.xp || 0).level;
+      const newXp = Math.max(0, (classItem.xp || 0) + amount);
+      const newLevel = getLevelInfo(newXp).level;
+
+      const logEntry = {
+        id: 'log-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+        amount,
+        tag: tag || 'General',
+        reason: reason || (amount >= 0 ? 'XP Awarded' : 'XP Adjusted'),
+        timestamp: Date.now()
+      };
+
+      classItem.xp = newXp;
+      classItem.history = classItem.history || [];
+      classItem.history.unshift(logEntry);
+
+      await saveClassToStore(classItem);
+
+      if (newLevel > oldLevel) {
+        // Level up celebration!
+        SoundFX.playLevelUpSound();
         confetti({
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 }
         });
-      } catch(e){}
-
-      document.getElementById('levelup-class-name').textContent = className;
-      document.getElementById('levelup-new-level').textContent = `Level ${newLevel}`;
-      document.getElementById('modal-levelup').classList.remove('hidden');
-    }
-
-    // --- Modal Management Helpers ---
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-    }
-
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
-    }
-
-    // Attach listeners to all close buttons
-    document.querySelectorAll('.btn-close-modal').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const modal = e.target.closest('.fixed');
-        if (modal) modal.classList.add('hidden');
-      });
-    });
-
-    document.getElementById('btn-close-levelup').addEventListener('click', () => {
-      closeModal('modal-levelup');
-    });
-
-    // --- Passcode Lock / Security ---
-    document.getElementById('btn-toggle-teacher').addEventListener('click', () => {
-      if (state.isTeacher) {
-        state.isTeacher = false;
-        renderApp();
+        showToast(`🎉 ${classItem.name} LEVELED UP to Level ${newLevel}!`, 'success');
       } else {
-        document.getElementById('input-passcode').value = '';
-        document.getElementById('pass-error-msg').classList.add('hidden');
-        openModal('lock-modal');
+        SoundFX.playXpChime();
+        showToast(`${amount >= 0 ? '+' : ''}${amount} XP awarded to ${classItem.name}`);
       }
-    });
-
-    document.getElementById('toggle-pass-vis').addEventListener('click', () => {
-      const input = document.getElementById('input-passcode');
-      const icon = document.querySelector('#toggle-pass-vis i');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fa-solid fa-eye-slash';
-      } else {
-        input.type = 'password';
-        icon.className = 'fa-solid fa-eye';
-      }
-    });
-
-    document.getElementById('form-lock').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const entered = document.getElementById('input-passcode').value;
-      if (entered === state.passcode) {
-        state.isTeacher = true;
-        closeModal('lock-modal');
-        renderApp();
-      } else {
-        document.getElementById('pass-error-msg').classList.remove('hidden');
-      }
-    });
-
-    // --- Award XP Modal ---
-    let selectedAwardTag = 'Participation';
-
-    function openAwardModal(classId) {
-      const cls = state.classes.find(c => c.id === classId);
-      if (!cls) return;
-
-      document.getElementById('award-class-id').value = classId;
-      document.getElementById('award-modal-title').textContent = `Award XP to ${cls.name}`;
-      document.getElementById('award-amount').value = '';
-      document.getElementById('award-reason').value = '';
-      openModal('modal-award');
     }
 
-    // Preset XP buttons
-    document.querySelectorAll('.btn-preset').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('award-amount').value = btn.dataset.preset;
-      });
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+      initKvdbCloud();
 
-    // Category tags selection
-    document.querySelectorAll('.btn-tag').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.btn-tag').forEach(b => b.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-500'));
-        btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-500');
-        selectedAwardTag = btn.dataset.tag;
-      });
-    });
-
-    document.getElementById('form-award-xp').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const classId = document.getElementById('award-class-id').value;
-      const amount = parseInt(document.getElementById('award-amount').value, 10);
-      const note = document.getElementById('award-reason').value;
-
-      if (!isNaN(amount) && classId) {
-        awardXP(classId, amount, selectedAwardTag, note);
-        closeModal('modal-award');
+      // Modal open/close helpers
+      const modals = document.querySelectorAll('[id^="modal-"], #lock-modal');
+      function closeModal(modal) {
+        modal.classList.add('hidden');
       }
-    });
-
-    // --- Batch Award Modal ---
-    document.getElementById('btn-batch-award').addEventListener('click', () => {
-      const container = document.getElementById('batch-class-list');
-      container.innerHTML = '';
-
-      state.classes.forEach(cls => {
-        const item = document.createElement('label');
-        item.className = 'flex items-center space-x-3 p-2.5 bg-slate-950 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700';
-        item.innerHTML = `
-          <input type="checkbox" value="${cls.id}" class="batch-chk w-4 h-4 rounded text-emerald-500 bg-slate-900 border-slate-700 focus:ring-emerald-500">
-          <span class="text-sm font-semibold text-slate-200">${cls.name}</span>
-        `;
-        container.appendChild(item);
-      });
-
-      document.getElementById('batch-amount').value = '';
-      document.getElementById('batch-reason').value = '';
-      openModal('modal-batch-award');
-    });
-
-    document.getElementById('btn-select-all-batch').addEventListener('click', () => {
-      const chks = document.querySelectorAll('.batch-chk');
-      const allChecked = Array.from(chks).every(c => c.checked);
-      chks.forEach(c => c.checked = !allChecked);
-    });
-
-    document.getElementById('form-batch-award').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const selectedIds = Array.from(document.querySelectorAll('.batch-chk:checked')).map(c => c.value);
-      const amount = parseInt(document.getElementById('batch-amount').value, 10);
-      const reason = document.getElementById('batch-reason').value || 'Batch Award';
-
-      if (selectedIds.length > 0 && !isNaN(amount)) {
-        selectedIds.forEach(id => {
-          awardXP(id, amount, 'Batch Bonus', reason);
+      document.querySelectorAll('.btn-close-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const modal = e.target.closest('[id^="modal-"], #lock-modal');
+          if (modal) closeModal(modal);
         });
-        closeModal('modal-batch-award');
-      }
-    });
+      });
 
-    // --- Class History Modal ---
-    function openHistoryModal(classId) {
-      const cls = state.classes.find(c => c.id === classId);
-      if (!cls) return;
+      // Passcode authentication
+      const lockModal = document.getElementById('lock-modal');
+      const formLock = document.getElementById('form-lock');
+      const inputPasscode = document.getElementById('input-passcode');
+      const passErrorMsg = document.getElementById('pass-error-msg');
+      const btnToggleTeacher = document.getElementById('btn-toggle-teacher');
 
-      document.getElementById('history-class-title').textContent = `${cls.name} History`;
-      const list = document.getElementById('history-log-list');
-      list.innerHTML = '';
-
-      if (!cls.history || cls.history.length === 0) {
-        list.innerHTML = '<p class="text-xs text-slate-500 italic text-center py-6">No experience transactions logged yet.</p>';
-      } else {
-        cls.history.forEach((item) => {
-          const div = document.createElement('div');
-          const isPositive = item.amount >= 0;
-          const dateStr = new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-
-          div.className = 'bg-slate-950 p-3 rounded-2xl border border-slate-800 flex items-center justify-between';
-          div.innerHTML = `
-            <div class="space-y-0.5">
-              <div class="flex items-center space-x-2">
-                <span class="text-xs font-bold px-2 py-0.5 rounded-md ${isPositive ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}">
-                  ${isPositive ? '+' : ''}${item.amount} XP
-                </span>
-                <span class="text-xs font-semibold text-slate-300">${item.category}</span>
-              </div>
-              ${item.note ? `<p class="text-xs text-slate-400">${item.note}</p>` : ''}
-              <span class="text-[10px] text-slate-500 block">${dateStr}</span>
-            </div>
-            ${state.isTeacher ? `
-            <button onclick="undoHistoryItem('${cls.id}', '${item.id}')" class="text-xs text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-slate-900 border border-slate-800" title="Undo Transaction">
-              <i class="fa-solid fa-rotate-left"></i>
-            </button>
-            ` : ''}
-          `;
-          list.appendChild(div);
-        });
-      }
-
-      openModal('modal-history');
-    }
-
-    async function undoHistoryItem(classId, historyId) {
-      const cls = state.classes.find(c => c.id === classId);
-      if (!cls || !cls.history) return;
-
-      const idx = cls.history.findIndex(h => h.id === historyId);
-      if (idx !== -1) {
-        const item = cls.history[idx];
-        cls.xp = Math.max(0, cls.xp - item.amount);
-        cls.history.splice(idx, 1);
-        await saveClassToCloud(cls);
-        openHistoryModal(classId);
-      }
-    }
-
-    // --- Custom UI Delete Class Confirmation ---
-    function confirmDeleteClass(classId) {
-      const cls = state.classes.find(c => c.id === classId);
-      if (!cls) return;
-      document.getElementById('delete-target-id').value = classId;
-      document.getElementById('delete-class-msg').textContent = `Are you sure you want to permanently delete "${cls.name}"?`;
-      openModal('modal-delete-confirm');
-    }
-
-    document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
-      const targetId = document.getElementById('delete-target-id').value;
-      if (targetId) {
-        await deleteClassFromCloud(targetId);
-        closeModal('modal-delete-confirm');
-      }
-    });
-
-    // --- Add / Edit Class Modal ---
-    document.getElementById('btn-add-class').addEventListener('click', () => openClassModal());
-    document.getElementById('btn-empty-add').addEventListener('click', () => openClassModal());
-
-    function openClassModal(classId = null) {
-      document.getElementById('edit-class-id').value = classId || '';
-      if (classId) {
-        const cls = state.classes.find(c => c.id === classId);
-        if (!cls) return;
-        document.getElementById('class-modal-title').textContent = 'Edit Class';
-        document.getElementById('class-name').value = cls.name;
-        document.getElementById('class-icon').value = cls.icon;
-        document.getElementById('class-color').value = cls.color;
-        document.getElementById('initial-xp').value = cls.xp;
-      } else {
-        document.getElementById('class-modal-title').textContent = 'Add New Class';
-        document.getElementById('class-name').value = '';
-        document.getElementById('class-icon').value = 'fa-flask';
-        document.getElementById('class-color').value = 'emerald';
-        document.getElementById('initial-xp').value = '0';
-      }
-      openModal('modal-class');
-    }
-
-    function openEditClassModal(classId) {
-      openClassModal(classId);
-    }
-
-    document.getElementById('form-class').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const editId = document.getElementById('edit-class-id').value;
-      const name = document.getElementById('class-name').value;
-      const icon = document.getElementById('class-icon').value;
-      const color = document.getElementById('class-color').value;
-      const xp = parseInt(document.getElementById('initial-xp').value, 10) || 0;
-
-      let targetClass;
-      if (editId) {
-        targetClass = state.classes.find(c => c.id === editId);
-        if (targetClass) {
-          targetClass.name = name;
-          targetClass.icon = icon;
-          targetClass.color = color;
-          targetClass.xp = xp;
+      btnToggleTeacher.addEventListener('click', () => {
+        if (appState.isTeacherMode) {
+          appState.isTeacherMode = false;
+          updateTeacherVisibility();
+          showToast("Switched to Student View");
+        } else {
+          inputPasscode.value = '';
+          passErrorMsg.classList.add('hidden');
+          lockModal.classList.remove('hidden');
+          inputPasscode.focus();
         }
-      } else {
-        targetClass = {
-          id: 'cls-' + Date.now(),
-          name: name,
-          icon: icon,
-          color: color,
-          xp: xp,
-          history: []
-        };
-      }
-
-      if (targetClass) {
-        await saveClassToCloud(targetClass);
-      }
-
-      closeModal('modal-class');
-    });
-
-    // --- Level Config & Passcode Settings ---
-    document.getElementById('btn-open-settings').addEventListener('click', () => {
-      const grid = document.getElementById('manual-level-inputs');
-      grid.innerHTML = '';
-
-      state.levelThresholds.forEach((val, idx) => {
-        const field = document.createElement('div');
-        field.className = 'space-y-1';
-        field.innerHTML = `
-          <label class="text-[10px] font-bold text-slate-400 block">Lvl ${idx + 1}</label>
-          <input type="number" value="${val}" data-lvl="${idx}" class="lvl-input w-full bg-slate-900 border border-slate-800 rounded-lg p-1.5 text-xs text-white font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500">
-        `;
-        grid.appendChild(field);
       });
 
-      openModal('modal-settings');
-    });
+      document.getElementById('toggle-pass-vis').addEventListener('click', () => {
+        const type = inputPasscode.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputPasscode.setAttribute('type', type);
+      });
 
-    document.getElementById('btn-save-passcode').addEventListener('click', async () => {
-      const newPass = document.getElementById('change-passcode').value;
-      if (newPass.trim()) {
-        state.passcode = newPass.trim();
-        await saveSettingsToCloud();
-        document.getElementById('change-passcode').value = '';
+      formLock.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (inputPasscode.value === appState.passcode) {
+          appState.isTeacherMode = true;
+          lockModal.classList.add('hidden');
+          updateTeacherVisibility();
+          showToast("Unlocked Teacher Mode!");
+        } else {
+          passErrorMsg.classList.remove('hidden');
+        }
+      });
+
+      // Add/Edit Class Modal
+      const modalClass = document.getElementById('modal-class');
+      const formClass = document.getElementById('form-class');
+      const btnAddClass = document.getElementById('btn-add-class');
+      const btnEmptyAdd = document.getElementById('btn-empty-add');
+
+      function openClassModal(classItem = null) {
+        document.getElementById('edit-class-id').value = classItem ? classItem.id : '';
+        document.getElementById('class-name').value = classItem ? classItem.name : '';
+        document.getElementById('class-icon').value = classItem ? classItem.icon : 'fa-flask';
+        document.getElementById('class-color').value = classItem ? classItem.color : 'emerald';
+        document.getElementById('initial-xp').value = classItem ? classItem.xp : 0;
+        document.getElementById('class-modal-title').textContent = classItem ? 'Edit Class' : 'Add New Class';
+        modalClass.classList.remove('hidden');
       }
-    });
 
-    document.getElementById('btn-save-settings').addEventListener('click', async () => {
-      const inputs = document.querySelectorAll('.lvl-input');
-      const newThresholds = [];
-      inputs.forEach(input => {
-        newThresholds.push(parseInt(input.value, 10) || 0);
-      });
+      btnAddClass.addEventListener('click', () => openClassModal());
+      btnEmptyAdd.addEventListener('click', () => openClassModal());
 
-      state.levelThresholds = newThresholds;
-      await saveSettingsToCloud();
-      renderApp();
-      closeModal('modal-settings');
-    });
+      formClass.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('edit-class-id').value;
+        const name = document.getElementById('class-name').value.trim();
+        const icon = document.getElementById('class-icon').value;
+        const color = document.getElementById('class-color').value;
+        const initialXp = parseInt(document.getElementById('initial-xp').value, 10) || 0;
 
-    // --- Data Export & CSV ---
-    document.getElementById('btn-open-export').addEventListener('click', () => {
-      openModal('modal-export');
-    });
-
-    document.getElementById('btn-export-csv').addEventListener('click', () => {
-      let csv = 'Class ID,Class Name,Total XP,Current Level,History Log Count\n';
-      state.classes.forEach(c => {
-        const lvl = getLevelInfo(c.xp).level;
-        const logCount = c.history ? c.history.length : 0;
-        csv += `"${c.id}","${c.name.replace(/"/g, '""')}",${c.xp},${lvl},${logCount}\n`;
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `ClassQuest_XP_Report_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    document.getElementById('btn-export-json').addEventListener('click', () => {
-      const jsonStr = JSON.stringify(state, null, 2);
-      const blob = new Blob([jsonStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `ClassQuest_Backup_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    document.getElementById('input-import-json').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        try {
-          const imported = JSON.parse(event.target.result);
-          if (imported.classes) {
-            state.classes = imported.classes;
-            if (imported.passcode) state.passcode = imported.passcode;
-            if (imported.levelThresholds) state.levelThresholds = imported.levelThresholds;
-            
-            for (const cls of state.classes) {
-              await saveClassToCloud(cls);
-            }
-            await saveSettingsToCloud();
-            renderApp();
-            closeModal('modal-export');
+        if (editId) {
+          const existing = appState.classes.find(c => c.id === editId);
+          if (existing) {
+            existing.name = name;
+            existing.icon = icon;
+            existing.color = color;
+            existing.xp = initialXp;
+            await saveClassToStore(existing);
+            showToast("Class updated successfully");
           }
-        } catch(err) {
-          console.error('Invalid backup file format.', err);
+        } else {
+          const newClass = {
+            id: 'cls-' + Date.now(),
+            name,
+            icon,
+            color,
+            xp: initialXp,
+            history: []
+          };
+          await saveClassToStore(newClass);
+          showToast("New class created!");
         }
-      };
-      reader.readAsText(file);
+
+        modalClass.classList.add('hidden');
+      });
+
+      // Award Single Class XP Modal
+      const modalAward = document.getElementById('modal-award');
+      const formAwardXp = document.getElementById('form-award-xp');
+      const awardAmount = document.getElementById('award-amount');
+      const awardReason = document.getElementById('award-reason');
+
+      document.querySelectorAll('.btn-preset').forEach(btn => {
+        btn.addEventListener('click', () => {
+          awardAmount.value = btn.dataset.preset;
+        });
+      });
+
+      document.querySelectorAll('.btn-tag').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.btn-tag').forEach(b => b.classList.remove('bg-emerald-900', 'border-emerald-500', 'text-white'));
+          btn.classList.add('bg-emerald-900', 'border-emerald-500', 'text-white');
+          appState.selectedTag = btn.dataset.tag;
+        });
+      });
+
+      formAwardXp.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const classId = document.getElementById('award-class-id').value;
+        const amount = parseInt(awardAmount.value, 10) || 0;
+        const reason = awardReason.value.trim();
+        const tag = appState.selectedTag || 'General';
+
+        await processXpAward(classId, amount, tag, reason);
+        modalAward.classList.add('hidden');
+      });
+
+      // Batch Award Modal
+      const modalBatch = document.getElementById('modal-batch-award');
+      const btnBatchAward = document.getElementById('btn-batch-award');
+      const batchList = document.getElementById('batch-class-list');
+      const formBatchAward = document.getElementById('form-batch-award');
+
+      btnBatchAward.addEventListener('click', () => {
+        batchList.innerHTML = '';
+        appState.classes.forEach(c => {
+          const row = document.createElement('label');
+          row.className = 'flex items-center space-x-3 p-2 bg-slate-950 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700';
+          row.innerHTML = `
+            <input type="checkbox" value="${c.id}" class="batch-chk rounded bg-slate-900 border-slate-700 text-emerald-600 focus:ring-emerald-500">
+            <span class="text-xs font-semibold text-white">${escapeHtml(c.name)}</span>
+          `;
+          batchList.appendChild(row);
+        });
+        modalBatch.classList.remove('hidden');
+      });
+
+      document.getElementById('btn-select-all-batch').addEventListener('click', () => {
+        const checkboxes = batchList.querySelectorAll('.batch-chk');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        checkboxes.forEach(cb => cb.checked = !allChecked);
+      });
+
+      formBatchAward.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const selectedIds = Array.from(batchList.querySelectorAll('.batch-chk:checked')).map(cb => cb.value);
+        const amount = parseInt(document.getElementById('batch-amount').value, 10) || 0;
+        const reason = document.getElementById('batch-reason').value.trim() || 'Batch Bonus';
+
+        if (selectedIds.length === 0) {
+          showToast("Please select at least one class", "error");
+          return;
+        }
+
+        for (const cid of selectedIds) {
+          await processXpAward(cid, amount, 'Batch Award', reason);
+        }
+
+        modalBatch.classList.add('hidden');
+        showToast(`Awarded ${amount} XP to ${selectedIds.length} classes!`);
+      });
+
+      // Grid Event Delegation for Edit, Delete, Quick Add, View Log
+      document.getElementById('class-grid').addEventListener('click', (e) => {
+        const btnAward = e.target.closest('.btn-open-award');
+        const btnQuick = e.target.closest('.btn-quick-add');
+        const btnEdit = e.target.closest('.btn-edit-class');
+        const btnDelete = e.target.closest('.btn-delete-class');
+        const btnHistory = e.target.closest('.btn-view-history');
+
+        if (btnAward) {
+          const classId = btnAward.dataset.id;
+          const classItem = appState.classes.find(c => c.id === classId);
+          if (classItem) {
+            document.getElementById('award-class-id').value = classId;
+            document.getElementById('award-modal-title').textContent = `Award XP to ${classItem.name}`;
+            awardAmount.value = '';
+            awardReason.value = '';
+            appState.selectedTag = null;
+            document.querySelectorAll('.btn-tag').forEach(b => b.classList.remove('bg-emerald-900', 'border-emerald-500', 'text-white'));
+            modalAward.classList.remove('hidden');
+          }
+        } else if (btnQuick) {
+          const classId = btnQuick.dataset.id;
+          const amount = parseInt(btnQuick.dataset.amount, 10);
+          processXpAward(classId, amount, 'Quick Bonus', 'Quick +10 XP button');
+        } else if (btnEdit) {
+          const classId = btnEdit.dataset.id;
+          const classItem = appState.classes.find(c => c.id === classId);
+          if (classItem) openClassModal(classItem);
+        } else if (btnDelete) {
+          const classId = btnDelete.dataset.id;
+          const className = btnDelete.dataset.name;
+          document.getElementById('delete-target-id').value = classId;
+          document.getElementById('delete-class-msg').textContent = `Are you sure you want to delete "${className}"?`;
+          document.getElementById('modal-delete-confirm').classList.remove('hidden');
+        } else if (btnHistory) {
+          const classId = btnHistory.dataset.id;
+          const classItem = appState.classes.find(c => c.id === classId);
+          if (classItem) {
+            document.getElementById('history-modal-title').textContent = `${classItem.name} - Log`;
+            const list = document.getElementById('history-log-list');
+            list.innerHTML = '';
+            const history = classItem.history || [];
+            if (history.length === 0) {
+              list.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No activity logged yet.</p>`;
+            } else {
+              history.forEach(h => {
+                const dateStr = new Date(h.timestamp).toLocaleDateString() + ' ' + new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const row = document.createElement('div');
+                row.className = "bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center";
+                row.innerHTML = `
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <span class="text-xs font-bold text-white">${escapeHtml(h.tag)}</span>
+                      <span class="text-[10px] text-slate-500">${dateStr}</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">${escapeHtml(h.reason || 'No description')}</p>
+                  </div>
+                  <span class="font-mono text-sm font-bold ${h.amount >= 0 ? 'text-emerald-400' : 'text-rose-400'}">
+                    ${h.amount >= 0 ? '+' : ''}${h.amount} XP
+                  </span>
+                `;
+                list.appendChild(row);
+              });
+            }
+            document.getElementById('modal-history').classList.remove('hidden');
+          }
+        }
+      });
+
+      // Confirm Delete
+      document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+        const targetId = document.getElementById('delete-target-id').value;
+        if (targetId) {
+          await deleteClassFromStore(targetId);
+          showToast("Class deleted");
+          document.getElementById('modal-delete-confirm').classList.add('hidden');
+        }
+      });
+
+      // Settings Modal
+      const modalSettings = document.getElementById('modal-settings');
+      document.getElementById('btn-open-settings').addEventListener('click', () => {
+        document.getElementById('change-passcode').value = '';
+        document.getElementById('base-xp-step').value = appState.baseXpMultiplier || 100;
+        modalSettings.classList.remove('hidden');
+      });
+
+      document.getElementById('btn-save-passcode').addEventListener('click', async () => {
+        const newPass = document.getElementById('change-passcode').value.trim();
+        if (newPass.length < 3) {
+          showToast("Passcode must be at least 3 characters", "error");
+          return;
+        }
+        appState.passcode = newPass;
+        await saveState();
+        showToast("Passcode updated!");
+      });
+
+      document.getElementById('btn-save-level-config').addEventListener('click', async () => {
+        const base = parseInt(document.getElementById('base-xp-step').value, 10) || 100;
+        appState.baseXpMultiplier = base;
+        await saveState();
+        renderDashboard();
+        showToast("Level formula updated!");
+      });
+
+      document.getElementById('btn-reset-demo').addEventListener('click', async () => {
+        appState.classes = getDefaultClasses();
+        await saveState();
+        renderDashboard();
+        showToast("Demo classes reloaded!");
+        modalSettings.classList.add('hidden');
+      });
+
+      // Search & Sort Inputs
+      document.getElementById('search-classes').addEventListener('input', (e) => {
+        appState.searchQuery = e.target.value;
+        renderDashboard();
+      });
+
+      document.getElementById('sort-classes').addEventListener('change', (e) => {
+        appState.sortBy = e.target.value;
+        renderDashboard();
+      });
+
+      // Export Modal
+      const modalExport = document.getElementById('modal-export');
+      document.getElementById('btn-open-export').addEventListener('click', () => {
+        modalExport.classList.remove('hidden');
+      });
+
+      document.getElementById('btn-export-csv').addEventListener('click', () => {
+        let csvContent = "data:text/csv;charset=utf-8,Class Name,Level,Total XP,Logs Count\n";
+        appState.classes.forEach(c => {
+          const lvl = getLevelInfo(c.xp || 0).level;
+          csvContent += `"${c.name}",${lvl},${c.xp || 0},${(c.history || []).length}\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `ClassQuest_Report_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showToast("CSV report downloaded!");
+      });
+
+      document.getElementById('btn-export-json').addEventListener('click', () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `ClassQuest_Backup_${Date.now()}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast("JSON backup downloaded!");
+      });
+
+      // Initial View Sync
+      updateTeacherVisibility();
     });
-
-    document.getElementById('sort-classes').addEventListener('change', () => renderApp());
-
-    // --- Initialization ---
-    window.onload = function() {
-      // Delay initialization slightly to ensure Firebase SDK script tag is parsed
-      setTimeout(() => {
-        initCloudStorage();
-      }, 100);
-    };
   </script>
 </body>
 </html>
