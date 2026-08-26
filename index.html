@@ -1006,7 +1006,58 @@
         statusBox.className = "flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700";
       }
     }
+// Replace 'YOUR_BUCKET_ID' with your actual kvdb.io bucket key
+const KVDB_BUCKET = 'KZvxw4DNrhHnsBRRiXtB4V'; 
+const KVDB_KEY = 'classroom_xp_data';
+const KVDB_URL = `https://kvdb.io/${KVDB_BUCKET}/${KVDB_KEY}`;
 
+// Load data from KVdb Cloud
+async function loadFromCloud() {
+  try {
+    const response = await fetch(KVDB_URL);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Successfully fetched data from KVdb Cloud:', data);
+      return data;
+    } else if (response.status === 404) {
+      console.log('No cloud data found yet. Starting fresh.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching from KVdb:', error);
+  }
+  return null;
+}
+
+// Save data to KVdb Cloud
+async function saveToCloud(appState) {
+  try {
+    const response = await fetch(KVDB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(appState)
+    });
+    
+    if (response.ok) {
+      updateSyncStatus('Cloud Saved', 'emerald');
+    } else {
+      updateSyncStatus('Sync Error', 'rose');
+    }
+  } catch (error) {
+    console.error('Error saving to KVdb:', error);
+    updateSyncStatus('Offline', 'amber');
+  }
+}
+
+// Polling mechanism to keep student views updated in real-time (every 5 seconds)
+function startCloudPolling(onDataUpdate) {
+  setInterval(async () => {
+    const freshData = await loadFromCloud();
+    if (freshData) {
+      onDataUpdate(freshData);
+    }
+  }, 5000);
+}
     // --- Level Helpers ---
     function getLevelInfo(xp) {
       const thresholds = state.levelThresholds;
